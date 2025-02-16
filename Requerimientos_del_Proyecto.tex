@@ -1,0 +1,244 @@
+%Paquetes de matemáticas.
+\documentclass{article}
+
+
+%Paquetes de matemáticas.
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{ wasysym }
+\usepackage{karnaugh-map}
+\usepackage{forest}
+\usepackage{tikz-qtree}
+\usepackage{bussproofs}
+\usepackage{stmaryrd}
+\usepackage{algpseudocode}
+%Grafos
+\usepackage{graphicx}
+\usepackage{tikz}
+%Symbols
+\usepackage{recycle}
+\usepackage{amsfonts}
+\usepackage{xcolor} %Para cambiar el color 
+
+
+\definecolor{carminered}{rgb}{1.0, 0.0, 0.22}
+\definecolor{green(ncs)}{rgb}{0.0, 0.62, 0.42}
+
+\newenvironment{demostracion}
+    {\paragraph{\textbf{\textcolor{green(ncs)}{Demostración.}}\\}
+    }
+    {
+    \newline\strut\hfill$\Box$
+    }
+\newenvironment{solucion}
+    {\paragraph{\textbf{\textcolor{green(ncs)}{Solución.}}\\}
+    }
+    {
+    \newline\strut\hfill$\Box$
+    }
+%%%%%%%%%%%
+
+%Margins
+\addtolength{\voffset}{-1.5cm}
+\addtolength{\hoffset}{-1.5cm}
+\addtolength{\textwidth}{3cm}
+\addtolength{\textheight}{3cm}
+
+%Header-Footer
+\usepackage{fancyhdr}
+
+%Footer Info
+\pagenumbering{Roman}
+\footskip = 50pt
+\renewcommand{\headrulewidth}{1pt}
+
+\pagestyle{fancyplain}
+\begin{document}
+
+\begin{titlepage}
+        \centering
+        {\bfseries\LARGE Universidad Nacional Autónoma De México\par}
+        {\bfseries\LARGE Facultad de Ciencias\par}
+        \vspace{1cm}
+        \vspace{2cm}
+        {\scshape\Huge\textcolor{green(ncs)}{Especificación de Requerimientos}\par}
+        \vspace{3cm}
+        {\itshape\Large Ingeniería de Software \par}
+        \vspace{2cm}
+        {\itshape\Large Equipo: Skops \& Company \par}
+        \vspace{2cm}
+        {\Large Integrantes:}\\ 
+        \vspace{1.0cm}
+        {\Large Garcia Lopez Francisco Daniel: 320104321}\\
+        \phone \\
+        {\Large Gómez López Erik Eduardo: 320258211}\\
+        \phone\\
+        {\Large Flores Gutiérrez José Luis: 320060087}\\
+        \phone \\
+        {\Large Luna Campos Emiliano: 320292084}\\
+        \phone\\
+        {\Large Vázquez Reyes Jesús Elías: 320010549}\\
+        \phone\\
+\end{titlepage}
+
+\section{Introducción}
+
+\begin{enumerate}
+    \item Propósito del Sistema \\
+    Este documento especifíca los requerimientos funcionales y no funcionales del Sistema de Incidentes Urbanos (SIU), que permitirá registrar, visualizar y gestionar incidentes registrados en vías urbanas.\\
+
+    \item Alcance \\
+    El SIU permitirá a los usuarios dar a conocer la existencia de incidentes urbanos en algunas zonas de interés en particular. Además, podrán actualizar el estado de los incidentes reportados, asi como poder ver incidentes reportados por otros usuarios.  \\
+
+    \item Definiciones y Abreviaciones
+        \begin{enumerate}
+            \item SIU: Sistema de Incidentes Urbanos
+            \item Usuario: Persona que puede acceder al sistema
+            \item Incidente: Registro de afectación en una ubicación específica
+        \end{enumerate}
+     
+\end{enumerate}
+
+\section{Requerimientos del Sistema}
+
+\begin{enumerate}
+
+    \item Requerimientos Funcionales
+        \begin{enumerate}
+            \item Registro de Usuario\\
+            El sistema permitirá el acceso de un usuario mediante un nombre único y contraseña.
+
+            \item Gestión de Usuario\\
+            El sistema permite registro, edición y eliminación de algún usuario registrado.
+
+            \item Gestión de Incidentes\\
+            El sistema permitirá registrar incidentes con título, fotografías, ubicación y descripción, así como editar el estado de algún incidente subido por los demás usuarios (con pruebas fotográficas).
+
+            \item Gestión de Búsquedas\\
+            El sistema permite la búsqueda de incidentes por medio de filtros para la obtención de información de los mismos, así como visualizarlos a través de un mapa interactivo.\\
+
+            \item Gestión de Búsquedas\\
+            El sistema permite la búsqueda de incidentes por medio de filtros para la obtención de información de los mismos, así como visualizarlos a través de un mapa interactivo.\\
+
+            \item Pruebas para incidentes\\
+            No estará habilitada la modificación de incidentes sin pruebas adjuntas.\\
+            
+        \end{enumerate}
+
+    \item Requerimientos No Funcionales
+        \begin{enumerate}
+        
+            \item Seguridad \\
+                \begin{enumerate}
+                
+                \item Sistema
+                
+                - Se habilitará un protocolo HTTPS con el fin de mantener la seguridad en el SUI. \\
+
+                - La rama principal se encontrará protegida en todo momento.
+
+                - No se permite el acceso de la base de datos a cada uno de los administradores, ni a los usuarios. \\
+
+                \item Usuario
+
+                - Solo los usuarios con una sesión iniciada pueden registrar incidentes urbanos.
+                
+                - El software será capaz de cifrar y proteger la información de los usuarios, garantizando seguridad para sus cuentas. 
+
+                - Solo los usuarios administradores pueden eliminar y/o editar cualquier incidente, o en su defecto, el dueño de éste. \\
+            
+                \end{enumerate}
+
+            \item Usabilidad
+            
+                \begin{enumerate}
+
+                    \item Sistema intuitivo.
+                    \item Contenido adecuado y regulado para mostrar.
+                    \item Interfaz amigable, accesible y agradable a la vista. \\
+                
+                \end{enumerate}
+
+            \item Rendimiento
+
+                \begin{enumerate}
+                
+                \item El filtraje de incidentes por categorías tardará menos de 3 segundos.
+                \item El proceso de dar de alta un incidente tomará menos de 5 segundos en promedio.
+                \item El software soportará hasta 99 usuarios simultáneos.
+                \item La actualización de incidentes y el tiempo de respuesta en la interfaz son imperceptibles. 
+
+                \end{enumerate}
+
+            \item Disponibilidad
+
+                \begin{enumerate}
+
+                \item El sistema deberá estar disponible al menos el 99\% del tiempo anual.
+
+                \end{enumerate}
+            
+        \end{enumerate}
+
+
+\section{Casos de Uso} 
+    \begin{enumerate}
+        \item CU1: Registrar un incidente\\
+        Actores: Usuario\\
+        Flujo Principal:
+            \begin{enumerate}
+                \item El usuario inicia sesión
+                \item Selecciona la opción de registrar incidente
+                \item Llena los campos solicitados para registrar el incidente
+                \item El sistema se  actualiza con el nuevo incidente registrado (actualiza el estado del incidente a "no solucionado")
+            \end{enumerate}
+
+        \item CU2: Solución del incidente\\
+        Actores: Usuario\\
+        Flujo Principal:
+            \begin{enumerate}
+                \item El usuario inicia sesión
+                \item Selecciona la opción de actualizar incidente
+                \item Llena los campos necesarios y solicitados para poder actualizar el estado del incidente
+                \item El sistema se actualiza con la nueva información recibida del usuario (actualiza el estado del incidente a "solucionado")
+            \end{enumerate}
+
+        \item  CU3: Búsqueda de incidentes\\
+        Actores: Usuario\\
+        Flujo Principal:
+            \begin{enumerate}
+                \item El usuario inicia sesión
+                \item Selecciona la opción de buscar incidente
+                \item El usuario realiza una búsqueda, la cuál puede ser reducida a través de filtros que proporciona el sistema
+                \item El sistema muestra los resultados encontrados en un mapa\\
+                Flujo Alternativo:
+                \item Si no se encuentra algún incidente con relación a la búsqueda solicitada, el sistema notifica al usuario
+            \end{enumerate}
+            
+    \end{enumerate}
+
+\section {Requisitos de Hardware y Software}
+    \begin{enumerate}
+        \item Hardware
+            \begin{enumerate}
+                \item Servidor con al menos 8Gb de RAM y procesador AMD Rayzen 3 3200G
+                \item Bases de datos alojadas en un sistema con almecenamiento SSD 
+            \end{enumerate}
+
+        \item Software
+            \begin{enumerate}
+                \item Lenguaje de Programación: Kotlin / HTML / CSS / Javascript
+                \item Base de datos: PostgreSQL
+                \item Framework web: React / Spring 
+            \end{enumerate}
+    \end{enumerate}
+
+\section{Consideraciones Finales}
+Este documento establece los requisitos iniciales del SIU. Cualquier modificación o ampliación deberá ser documentada y aprobada por los interesados.
+
+\end{enumerate}
+
+\end{document}
+
+
