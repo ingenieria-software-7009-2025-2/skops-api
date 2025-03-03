@@ -19,6 +19,13 @@ colonia varchar(100),
 calle varchar(100)
 );
 
+ALTER TABLE incidentes.incidente
+ADD categoria varchar(100);
+
+ALTER TABLE incidentes.usuario
+ADD rol varchar(100) check (rol in ('admin', 'user'));
+
+
 create table incidentes.actualizar(
 fk_incidente int,
 foreign key (fk_incidente) references incidentes.incidente (id_incidente) on delete cascade,

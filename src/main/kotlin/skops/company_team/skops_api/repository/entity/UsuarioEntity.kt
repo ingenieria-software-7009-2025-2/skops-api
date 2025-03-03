@@ -13,7 +13,9 @@ class UsuarioEntity constructor(
     @Column(name = "contrasenia")
     var contrasenia: String="",
     @Column(name = "token")
-    var token: String?=null
+    var token: String?=null,
+    @Column(name = "rol")
+    var rol: String ="user"
 ) {
 
 

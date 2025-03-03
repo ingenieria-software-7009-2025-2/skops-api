@@ -26,7 +26,8 @@ class UsuarioService(private var usuarioRepository: UsuarioRepostory) {
             id_usuario = result.id_usuario.toString(),
             mail = result.email,
             token = result.token,
-            password = result.contrasenia
+            password = result.contrasenia,
+            rol = result.rol
         )
         return usuarioCreado
     }
@@ -44,7 +45,8 @@ class UsuarioService(private var usuarioRepository: UsuarioRepostory) {
                 id_usuario = user.id_usuario.toString(),
                 mail = user.email,
                 token = user.token,
-                password = user.contrasenia
+                password = user.contrasenia,
+                rol = user.rol
             )
 
             myUsers.add(userFound)
@@ -64,6 +66,7 @@ class UsuarioService(private var usuarioRepository: UsuarioRepostory) {
                 mail = userFound.email,
                 token = token,
                 password = userFound.contrasenia,
+                rol = userFound.rol
             )
         } else {
             userFound
@@ -96,6 +99,7 @@ class UsuarioService(private var usuarioRepository: UsuarioRepostory) {
                 mail = userFound.email,
                 token = "*******",
                 password = userFound.contrasenia,
+                rol = userFound.rol
             )
         } else return null
     }
@@ -116,7 +120,8 @@ class UsuarioService(private var usuarioRepository: UsuarioRepostory) {
             id_usuario = updatedEntity.id_usuario.toString(),
             mail = updatedEntity.email,
             token = updatedEntity.token,
-            password = updatedEntity.contrasenia
+            password = updatedEntity.contrasenia,
+            rol = updatedEntity.rol
         )
     }
 
