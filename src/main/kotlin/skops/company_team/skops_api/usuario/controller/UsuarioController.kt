@@ -1,45 +1,67 @@
 package skops.company_team.skops_api.usuario.controller
 
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import skops.company_team.skops_api.domain.Usuario
+import skops.company_team.skops_api.service.UsuarioService
+import skops.company_team.skops_api.usuario.controller.body.LoginUserBody
 import skops.company_team.skops_api.usuario.controller.body.UsuarioBody
+import skops.company_team.skops_api.usuario.controller.body.UsuarioUpdateBody
 
 @RestController
-@RequestMapping("/v1")
+@RequestMapping("/v1/users")
 
-class UsuarioController {
+class UsuarioController (var usuarioService: UsuarioService){
 
-    @PostMapping("/usuario")
-    fun createUsuario(@RequestBody usuarioBody: UsuarioBody): ResponseEntity<Usuario> {
+    @PostMapping
+    fun agregarUsuario(@RequestBody usuarioBody: UsuarioBody): ResponseEntity<Any> {
         val miUsuario = Usuario(mail = usuarioBody.mail,
-                                password = usuarioBody.password,
-                                token = usuarioBody.token)
-
-        return ResponseEntity.ok(miUsuario)
+                                password = usuarioBody.password)
+        val response = usuarioService.addUser(miUsuario)
+        return ResponseEntity.ok(response)
     }
 
-    @PostMapping("/usuario/login")
-    fun createLogIn(@RequestBody usuarioBody: UsuarioBody): ResponseEntity<Usuario> {
-        val miUsuario = Usuario(mail = usuarioBody.mail,
-            password = usuarioBody.password)
-
-        return ResponseEntity.ok(miUsuario)
+    @PostMapping("/login")
+    fun createLogIn(@RequestBody loginUserBody: LoginUserBody): ResponseEntity<Usuario> {
+        val result = usuarioService.login(loginUserBody.mail,loginUserBody.password)
+        return if (result == null){
+            ResponseEntity.notFound().build()
+        } else {
+            ResponseEntity.ok(result)
+        }
     }
 
-    @PostMapping("/usuario/logout")
-    fun createLogOut(): ResponseEntity<String>{
-        return ResponseEntity.ok("sesion cerrada :D")
+    @PostMapping("/logout")
+    fun createLogOut(@RequestHeader("Autorizacion") token:String): ResponseEntity<String>{
+        val logout = usuarioService.logout(token)
+        return if (!logout){
+            ResponseEntity.badRequest().build()
+        } else {
+            ResponseEntity.ok("Sesión Cerrada")
+        }
     }
 
-    @GetMapping("/usuario/me")
-    fun obtenerUsuario(): ResponseEntity<Usuario>{
-        val miUsuario = Usuario(mail = "ejemplo@gmail.com", password = "12345", token = "token1")
-        return ResponseEntity.ok(miUsuario)
+    @GetMapping("/me")
+    fun meUsuario(@RequestHeader("Autorizacion") token:String): ResponseEntity<Usuario>{
+        val response = usuarioService.getInfoAboutMe(token)
+        return if (response != null){
+            ResponseEntity.ok(response)
+        } else {
+            ResponseEntity.status(401).build()
+        }
+    }
+
+    @PutMapping("/me")
+    fun actualizarUsuario(@RequestHeader("Autorizacion") token: String, @RequestBody usuarioUpdateBody: UsuarioUpdateBody): ResponseEntity<Usuario> {
+        if (token == "") {
+            return ResponseEntity.status(401).build()
+        }
+        val usuarioActualizado = usuarioService.updateUser(token, usuarioUpdateBody)
+        return if (usuarioActualizado != null) {
+            ResponseEntity.ok(usuarioActualizado)
+        } else {
+            ResponseEntity.status(401).build()
+        }
     }
 
 }

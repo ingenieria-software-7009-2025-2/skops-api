@@ -4,6 +4,7 @@ import skops.company_team.skops_api.repository.UsuarioRepostory
 import skops.company_team.skops_api.domain.Usuario
 import org.springframework.stereotype.Service
 import skops.company_team.skops_api.repository.entity.UsuarioEntity
+import skops.company_team.skops_api.usuario.controller.body.UsuarioUpdateBody
 import java.util.UUID
 
 
@@ -16,16 +17,16 @@ class UsuarioService(private var usuarioRepository: UsuarioRepostory) {
 
         //Convertimos el objeto del dominio al objeto que necesita nuestra BD
         val usuarioDB =
-            UsuarioEntity(mail = usuario.mail, password = usuario.password!!, token = usuario.token)
+            UsuarioEntity(email = usuario.mail, contrasenia = usuario.password!!, token = usuario.token)
 
         val result = usuarioRepository.save(usuarioDB)
 
         // Convertimos el objeto de nuestra BD a un objeto de nuestro dominio.
         val usuarioCreado = Usuario(
             id_usuario = result.id_usuario.toString(),
-            mail = result.mail,
+            mail = result.email,
             token = result.token,
-            password = result.password
+            password = result.contrasenia
         )
         return usuarioCreado
     }
@@ -41,9 +42,9 @@ class UsuarioService(private var usuarioRepository: UsuarioRepostory) {
             // Convertimos el objeto de nuestra BD a un objeto de nuestro dominio.
             val userFound = Usuario(
                 id_usuario = user.id_usuario.toString(),
-                mail = user.mail,
+                mail = user.email,
                 token = user.token,
-                password = user.password
+                password = user.contrasenia
             )
 
             myUsers.add(userFound)
@@ -60,9 +61,9 @@ class UsuarioService(private var usuarioRepository: UsuarioRepostory) {
             updateTokenUser(userFound, token)
             Usuario(
                 id_usuario = userFound.id_usuario.toString(),
-                mail = userFound.mail,
+                mail = userFound.email,
                 token = token,
-                password = userFound.password,
+                password = userFound.contrasenia,
             )
         } else {
             userFound
@@ -92,10 +93,31 @@ class UsuarioService(private var usuarioRepository: UsuarioRepostory) {
         if (userFound != null) {
             return Usuario(
                 id_usuario = userFound.id_usuario.toString(),
-                mail = userFound.mail,
+                mail = userFound.email,
                 token = "*******",
-                password = userFound.password,
+                password = userFound.contrasenia,
             )
         } else return null
     }
+
+    fun updateUser(token: String, updateBody: UsuarioUpdateBody): Usuario? {
+        // Se busca el usuario por el token recibido
+        val userEntity = usuarioRepository.findByToken(token) ?: return null
+
+        // Actualiza los campos si se proporcionaron en el JSON
+        updateBody.mail?.let { userEntity.email = it }
+        updateBody.password?.let { userEntity.contrasenia = it }
+
+        // Se guarda el usuario actualizado en la base de datos
+        val updatedEntity = usuarioRepository.save(userEntity)
+
+        // Se convierte la entidad actualizada al objeto del dominio y se retorna
+        return Usuario(
+            id_usuario = updatedEntity.id_usuario.toString(),
+            mail = updatedEntity.email,
+            token = updatedEntity.token,
+            password = updatedEntity.contrasenia
+        )
+    }
+
 }

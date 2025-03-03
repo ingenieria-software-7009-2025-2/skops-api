@@ -9,9 +9,9 @@ class UsuarioEntity constructor(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id_usuario: Int =0,
     @Column(name = "email")
-    var mail: String ="",
+    var email: String ="",
     @Column(name = "contrasenia")
-    var password: String="",
+    var contrasenia: String="",
     @Column(name = "token")
     var token: String?=null
 ) {
