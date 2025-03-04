@@ -8,7 +8,7 @@ CREATE TABLE incidentes.usuario (
 );
 
 create table incidentes.incidente(
-id_incidente int primary key,
+id_incidente SERIAL primary key,
 titulo varchar(100),
 descripcion varchar(1000),
 estado varchar(50) check (estado in ('no solucionado', 'solucionado')), 
