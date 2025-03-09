@@ -5,7 +5,7 @@ import org.springframework.boot.runApplication
 
 @SpringBootApplication
 class SkopsApiApplication
-
+//Foooo
 fun main(args: Array<String>) {
 	runApplication<SkopsApiApplication>(*args)
 }
