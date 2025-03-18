@@ -17,13 +17,14 @@ class UsuarioService(private var usuarioRepository: UsuarioRepostory) {
 
         //Convertimos el objeto del dominio al objeto que necesita nuestra BD
         val usuarioDB =
-            UsuarioEntity(email = usuario.mail, contrasenia = usuario.password!!, token = usuario.token)
+            UsuarioEntity(username = usuario.username, email = usuario.mail, contrasenia = usuario.password!!, token = usuario.token)
 
         val result = usuarioRepository.save(usuarioDB)
 
         // Convertimos el objeto de nuestra BD a un objeto de nuestro dominio.
         val usuarioCreado = Usuario(
             id_usuario = result.id_usuario.toString(),
+            username = result.username,
             mail = result.email,
             token = result.token,
             password = result.contrasenia,
@@ -43,6 +44,7 @@ class UsuarioService(private var usuarioRepository: UsuarioRepostory) {
             // Convertimos el objeto de nuestra BD a un objeto de nuestro dominio.
             val userFound = Usuario(
                 id_usuario = user.id_usuario.toString(),
+                username = user.username,
                 mail = user.email,
                 token = user.token,
                 password = user.contrasenia,
@@ -63,6 +65,7 @@ class UsuarioService(private var usuarioRepository: UsuarioRepostory) {
             updateTokenUser(userFound, token)
             Usuario(
                 id_usuario = userFound.id_usuario.toString(),
+                username = userFound.username,
                 mail = userFound.email,
                 token = token,
                 password = userFound.contrasenia,
@@ -96,6 +99,7 @@ class UsuarioService(private var usuarioRepository: UsuarioRepostory) {
         if (userFound != null) {
             return Usuario(
                 id_usuario = userFound.id_usuario.toString(),
+                username = userFound.username,
                 mail = userFound.email,
                 token = "*******",
                 password = userFound.contrasenia,
@@ -118,6 +122,7 @@ class UsuarioService(private var usuarioRepository: UsuarioRepostory) {
         // Se convierte la entidad actualizada al objeto del dominio y se retorna
         return Usuario(
             id_usuario = updatedEntity.id_usuario.toString(),
+            username = updatedEntity.username,
             mail = updatedEntity.email,
             token = updatedEntity.token,
             password = updatedEntity.contrasenia,

@@ -15,7 +15,8 @@ class UsuarioController (var usuarioService: UsuarioService){
 
     @PostMapping
     fun agregarUsuario(@RequestBody usuarioBody: UsuarioBody): ResponseEntity<Any> {
-        val miUsuario = Usuario(mail = usuarioBody.mail,
+        val miUsuario = Usuario(username = usuarioBody.username,
+                                mail = usuarioBody.mail,
                                 password = usuarioBody.password)
         val response = usuarioService.addUser(miUsuario)
         return ResponseEntity.ok(response)
