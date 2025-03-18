@@ -1,9 +1,13 @@
+-- Base de Datos 
+create database "Incidencias-DataBase";
+
 -- Esquema de incidentes
 create schema if not exists "incidentes";
 
 --- Tabla de la entidad 'Usuario'
 create table incidentes.usuario(
 id_usuario serial primary key,
+username VARCHAR(100) unique,
 email VARCHAR(100) unique,
 contrasenia VARCHAR(100),
 "token" TEXT unique,
@@ -12,6 +16,7 @@ rol varchar(100) check (rol in ('admin', 'user'))
 
 -- Comentarios en la tabla y columnas de Usuario
 comment on table incidentes.usuario is 'Esta tabla guarda información sobre los usuarios del sistema';
+comment on column incidentes.usuario.username is 'El nombre del usuario';
 comment on column incidentes.usuario.id_usuario is 'La ID única de cada usuario';
 comment on column incidentes.usuario.email is 'El correo electrónico del usuario';
 comment on column incidentes.usuario.token is 'El token que se genera cuando el usuario inica sesión';
