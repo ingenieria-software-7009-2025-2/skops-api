@@ -1,14 +1,13 @@
 {
 	"info": {
-		"_postman_id": "1c188a7e-39d4-4c91-94cd-a4f1bf8ea2b1",
-		"name": "primera_iteración_usuarios",
+		"_postman_id": "e68fda86-3cf9-4a4d-8fe4-b69eb9c820af",
+		"name": "endpoints_usuarios",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "39375302",
-		"_collection_link": "https://dbb000.postman.co/workspace/DBB-Workspace~bf891ae7-4a97-46e7-b7b3-544d1fa1356e/collection/37576779-1c188a7e-39d4-4c91-94cd-a4f1bf8ea2b1?action=share&source=collection_link&creator=39375302"
+		"_exporter_id": "43224281"
 	},
 	"item": [
 		{
-			"name": " http://localhost:8080/v1/users",
+			"name": "agregarUsuario",
 			"request": {
 				"auth": {
 					"type": "noauth"
@@ -40,7 +39,7 @@
 			"response": []
 		},
 		{
-			"name": " http://localhost:8080/v1/users/login",
+			"name": "loginUsuario",
 			"request": {
 				"auth": {
 					"type": "noauth"
@@ -73,7 +72,7 @@
 			"response": []
 		},
 		{
-			"name": " http://localhost:8080/v1/users/logout",
+			"name": "logoutUsuario",
 			"request": {
 				"auth": {
 					"type": "noauth"
@@ -112,7 +111,7 @@
 			"response": []
 		},
 		{
-			"name": " http://localhost:8080/v1/users/me",
+			"name": "getInfoUsuario",
 			"request": {
 				"auth": {
 					"type": "noauth"
@@ -142,7 +141,7 @@
 			"response": []
 		},
 		{
-			"name": "http://localhost:8080/v1/users/me?Autorizacion",
+			"name": "actualizaInfoUsuario",
 			"request": {
 				"auth": {
 					"type": "noauth"

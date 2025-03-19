@@ -1,6 +1,7 @@
 package skops.company_team.skops_api.domain
 
 data class Usuario (var id_usuario: String?=null,
+                    var username: String,
                     var mail: String,
                     var password: String,
                     var token: String?=null,
