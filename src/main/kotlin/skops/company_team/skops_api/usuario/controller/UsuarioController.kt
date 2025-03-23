@@ -7,7 +7,9 @@ import skops.company_team.skops_api.service.UsuarioService
 import skops.company_team.skops_api.usuario.controller.body.LoginUserBody
 import skops.company_team.skops_api.usuario.controller.body.UsuarioBody
 import skops.company_team.skops_api.usuario.controller.body.UsuarioUpdateBody
+import org.springframework.web.bind.annotation.CrossOrigin;
 
+@CrossOrigin(origins = ["http://localhost:3000"])
 @RestController
 @RequestMapping("/v1/users")
 
