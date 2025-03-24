@@ -45,7 +45,8 @@ class UsuarioController (var usuarioService: UsuarioService){
     }
 
     @GetMapping("/me")
-    fun meUsuario(@RequestHeader("Autorizacion") token:String): ResponseEntity<Usuario>{
+    fun meUsuario(@RequestHeader("Autorizacion") authHeader:String): ResponseEntity<Usuario>{
+        val token = authHeader.replace("Bearer ", "")
         val response = usuarioService.getInfoAboutMe(token)
         return if (response != null){
             ResponseEntity.ok(response)
