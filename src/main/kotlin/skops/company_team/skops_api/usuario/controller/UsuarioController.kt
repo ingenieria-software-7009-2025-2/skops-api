@@ -10,9 +10,21 @@ import skops.company_team.skops_api.service.UsuarioService
 import skops.company_team.skops_api.usuario.controller.body.LoginUserBody
 import skops.company_team.skops_api.usuario.controller.body.UsuarioBody
 import skops.company_team.skops_api.usuario.controller.body.UsuarioUpdateBody
-import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.context.annotation.Configuration
+import org.springframework.web.servlet.config.annotation.CorsRegistry
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 
-@CrossOrigin(origins = ["http://localhost:3000"])
+@Configuration
+class CorsConfig : WebMvcConfigurer {
+    override fun addCorsMappings(registry: CorsRegistry) {
+        registry.addMapping("/**")
+            .allowedOrigins("http://localhost:3000")
+            .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+            .allowedHeaders("*")
+            .allowCredentials(true)
+            .maxAge(3600)
+    }
+}
 @RestController
 @RequestMapping("/v1/users")
 
@@ -67,7 +79,7 @@ class UsuarioController (var usuarioService: UsuarioService){
     fun meUsuario(
         @Parameter(description = "Token generado para el usuario al iniciar sesión.")
         @RequestHeader("Autorizacion") authHeader:String): ResponseEntity<Usuario>{
-        
+
         val token = authHeader.replace("Bearer ", "")
         val response = usuarioService.getInfoAboutMe(token)
         return if (response != null){
@@ -81,9 +93,10 @@ class UsuarioController (var usuarioService: UsuarioService){
     @PutMapping("/me")
     fun actualizarUsuario(
         @Parameter(description = "Token generado para el usuario al iniciar sesión.")
-        @RequestHeader("Autorizacion") token: String,
+        @RequestHeader("Autorizacion") authHeader: String,
         @RequestBody usuarioUpdateBody: UsuarioUpdateBody): ResponseEntity<Usuario> {
 
+        val token = authHeader.replace("Bearer ", "")
         if (token == "") {
             return ResponseEntity.status(401).build()
         }
