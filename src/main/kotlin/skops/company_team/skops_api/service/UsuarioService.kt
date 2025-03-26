@@ -113,6 +113,7 @@ class UsuarioService(private var usuarioRepository: UsuarioRepostory) {
         val userEntity = usuarioRepository.findByToken(token) ?: return null
 
         // Actualiza los campos si se proporcionaron en el JSON
+        updateBody.username?.let { userEntity.username = it }
         updateBody.mail?.let { userEntity.email = it }
         updateBody.password?.let { userEntity.contrasenia = it }
 
